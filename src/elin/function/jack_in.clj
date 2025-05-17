@@ -146,5 +146,6 @@
            port (e.u.nrepl/get-free-port)
            {:keys [language command]} (generate-command project-type port [])
            args (cons {:dir project-root-dir} command)]
+     (e.message/info host (str "jack-in command → " (pr-str args)))
      (e.u.process/start (port->process-id port) args)
      {:language language :port port})))
