@@ -37,3 +37,8 @@
     (catch Exception _
       false)))
 (def executable? (memoize executable?*))
+
+(defn windows? []
+  (-> (System/getProperty "os.name")
+      (.toLowerCase)
+      (.contains "windows")))
