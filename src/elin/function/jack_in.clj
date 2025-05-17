@@ -70,15 +70,20 @@
   (e/unsupported))
 
 (defmethod generate-command e.c.jack-in/clojure-cli
-  [_ port optional-args]
-  {:language e.c.nrepl/lang-clojure
-   :command (concat [e.c.jack-in/clojure-command]
-              optional-args
-              ["-Sdeps" (pr-str {:deps (:deps command-config)})
-               "-M" "-m" "nrepl.cmdline"
-               "--port" (str port)
-               "--middleware" (pr-str (:middlewares command-config))
-               "--interactive"])})
+  [_ port _]
+  (let [deps-edn (pr-str {:deps (:deps command-config)})
+        mws-edn  (pr-str (:middlewares command-config))
+        ;; quote once when the arg contains a space and we are on Windows
+        quote-if #(if (and (e.u.process/windows?) (re-find #"\s" %))
+                    (str "\"" % "\"")
+                    %)]
+    {:language e.c.nrepl/lang-clojure
+     :command  [e.c.jack-in/clojure-command
+                "-Sdeps"      (quote-if deps-edn)
+                "-M" "-m"     "nrepl.cmdline"
+                "--port"      (str port)
+                "--middleware" (quote-if mws-edn)
+                "--interactive"]}))
 
 (defmethod generate-command e.c.jack-in/leiningen
   [_ port _]
