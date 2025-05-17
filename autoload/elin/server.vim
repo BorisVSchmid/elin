@@ -32,12 +32,10 @@ function! s:start(port) abort
         \ )
 
   let json_config = json_encode(config)
-  if has('win32') || has('win64')
-    let json_config = shellescape(json_config, 1)
-  endif
   let command = [g:elin#babashka, '-m', 'elin.core', json_config]
   let options = {
         \ 'cwd': g:elin_home,
+        \ 'err_cb': {_, msg -> writefile([msg], 'C:/temp/elin-stderr.log', 'a')}
         \ 'err_cb': funcref('s:error_callback'),
         \ }
 
