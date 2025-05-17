@@ -73,9 +73,10 @@
   [_ port _]
   (let [deps-edn (pr-str {:deps (:deps command-config)})
         mws-edn  (pr-str (:middlewares command-config))
-        ;; quote once when the arg contains a space and we are on Windows
-        quote-if #(if (and (e.u.process/windows?) (re-find #"\s" %))
-                    (str "\"" % "\"")
+        ;; ── changed helper ─────────────────────────────────────────
+        quote-if #(if (and (e.u.process/windows?)
+                           (re-find #"\s" %))          ; only if the arg
+                    (str "'" % "'")                    ; contains a space
                     %)]
     {:language e.c.nrepl/lang-clojure
      :command  [e.c.jack-in/clojure-command
