@@ -1,3 +1,3 @@
 function! elin#internal#plugin#search() abort
-  return globpath(&runtimepath, 'elin/plugin.edn', 1, 1)
+  return globpath(&runtimepath, 'example-plugin/plugin.edn', 1, 1)
 endfunction
