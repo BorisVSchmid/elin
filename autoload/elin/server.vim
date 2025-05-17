@@ -35,7 +35,7 @@ function! s:start(port) abort
   let command = [g:elin#babashka, '-m', 'elin.core', json_config]
   let options = {
         \ 'cwd': g:elin_home,
-        \ 'err_cb': {_, msg -> writefile([msg], 'C:/temp/elin-stderr.log', 'a')}
+        \ 'err_cb': {_, msg -> writefile([msg], 'C:/temp/elin-stderr.log', 'a')},
         \ 'err_cb': funcref('s:error_callback'),
         \ }
 
