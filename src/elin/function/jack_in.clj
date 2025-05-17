@@ -6,6 +6,7 @@
    [elin.constant.jack-in :as e.c.jack-in]
    [elin.constant.nrepl :as e.c.nrepl]
    [elin.error :as e]
+   [elin.message :as e.message]
    [elin.protocol.host :as e.p.host]
    [elin.util.nrepl :as e.u.nrepl]
    [elin.util.process :as e.u.process]))
