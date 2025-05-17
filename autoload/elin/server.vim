@@ -12,6 +12,7 @@ function! elin#server#start() abort
 endfunction
 
 function! s:start(port) abort
+  let a:port = trim(a:port)          " removes both \r and \n
   let s:port = a:port
 
   " -------- current buffer’s dir + plugin edn files --------
