@@ -16,7 +16,7 @@ function! s:start(port) abort
   let s:port = trim(a:port)
 
   " On Windows replace “\” with “/” once; POSIX paths need no change.
-  let l:cwd       = elin#internal#path#abs()
+  let l:cwd       = expand('%:p:h')
   let l:edn_files = elin#internal#plugin#search()
 
   if has('win32') || has('win64')
