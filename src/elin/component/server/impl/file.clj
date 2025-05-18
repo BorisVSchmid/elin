@@ -12,12 +12,12 @@
 (m/=> get-current-working-directory!* [:-> e.c.s.function/?IFunction e.schema/?ManyToManyChannel])
 (defn- get-current-working-directory!*
   [host]
-  (e.c.s.function/request! host "expand" ["%:p:h"]))
+  (e.c.s.function/request! host "elin#internal#path#dir" []))
 
 (m/=> get-current-file-path!* [:=> [:cat e.c.s.function/?IFunction] (e.schema/error-or string?)])
 (defn- get-current-file-path!*
   [host]
-  (e.c.s.function/request! host "expand" ["%:p"]))
+  (e.c.s.function/request! host "elin#internal#path#file" []))
 
 (m/=> get-cursor-position!* [:=> [:cat e.c.s.function/?IFunction [:* any?]] e.schema/?ManyToManyChannel])
 (defn- get-cursor-position!*
