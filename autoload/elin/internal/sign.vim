@@ -9,7 +9,7 @@ function! elin#internal#sign#place(name, lnum, file, group) abort
 endfunction
 
 function! elin#internal#sign#list_in_buffer(...) abort
-  let target_buf = get(a:, 1, expand('%:p'))
+  let target_buf = get(a:, 1, elin#internal#path#file())
   let list = sign_getplaced(target_buf, {'group': '*'})
   try
     return list[0]['signs']
@@ -30,7 +30,7 @@ endfunction
 function! elin#internal#sign#jump_to_next(...) abort
   let lnum = line('.')
   let opt = get(a:, 1, {})
-  let file = get(opt, 'file', expand('%:p'))
+  let file = get(opt, 'file', elin#internal#path#file())
   let name = get(opt, 'name', '')
   let sign_list = elin#internal#sign#list_in_buffer(file)
   let target = ''
