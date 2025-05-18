@@ -15,19 +15,10 @@ function! s:start(port) abort
   " Trim various carriage return signals that might get stuck to port.
   let s:port = trim(a:port)
 
-  " On Windows replace “\” with “/” once; POSIX paths need no change.
-  let l:cwd       = expand('%:p:h')
-  let l:edn_files = elin#internal#plugin#search()
-
-  if has('win32') || has('win64')
-    let l:cwd       = substitute(l:cwd,       '\\', '/', 'g')
-    let l:edn_files = map(l:edn_files, {i, p -> substitute(p, '\\', '/', 'g')})
-  endif
-
   let config = extend(
         \   g:elin_config,
-        \   {'env': {'cwd': l:cwd},
-        \    'plugin': {'edn-files': l:edn_files},
+        \   {'env': {'cwd': elin#internal#path#dir()},
+        \    'plugin': {'edn-files': elin#internal#plugin#search()},
         \    'server': {'host': s:host, 'port': str2nr(a:port)}},
         \ )
   let json_config = json_encode(config)
