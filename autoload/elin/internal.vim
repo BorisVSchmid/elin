@@ -26,7 +26,7 @@ endfunction
 
 function! elin#internal#jump(path, lnum, col, jump_cmd) abort
   call elin#internal#add_curpos_to_jumplist()
-  if expand('%:p') !=# a:path
+  if elin#internal#path#file() !=# a:path
     execute printf(':keepjumps %s %s', a:jump_cmd, a:path)
   endif
   if a:lnum > 0 && a:col > 0
