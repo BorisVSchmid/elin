@@ -61,7 +61,7 @@ endfunction
 function! elin#internal#sign#jump_to_prev(...) abort
   let lnum = line('.')
   let opt = get(a:, 1, {})
-  let file = get(opt, 'file', expand('%:p'))
+  let file = get(opt, 'file', elin#internal#path#file())
   let name = get(opt, 'name', '')
   let tmp = ''
   let target = ''
@@ -124,7 +124,7 @@ endfunction
 
 function! elin#internal#sign#refresh(...) abort
   let opt = get(a:, 1, {})
-  let file = get(opt, 'file', expand('%:p'))
+  let file = get(opt, 'file', elin#internal#path#file())
   let signs = get(opt, 'signs', elin#internal#sign#list_in_buffer())
 
   for sign in signs
