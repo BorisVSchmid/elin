@@ -6,7 +6,6 @@
    [elin.constant.jack-in :as e.c.jack-in]
    [elin.constant.nrepl :as e.c.nrepl]
    [elin.error :as e]
-   [elin.message :as e.message]
    [elin.protocol.host :as e.p.host]
    [elin.util.nrepl :as e.u.nrepl]
    [elin.util.process :as e.u.process]))
@@ -70,14 +69,15 @@
   (e/unsupported))
 
 (defmethod generate-command e.c.jack-in/clojure-cli
-  [_ port _]
+  [_ port optional-args]
   {:language e.c.nrepl/lang-clojure
-   :command  [e.c.jack-in/clojure-command
-              "-Sdeps"      (pr-str {:deps (:deps command-config)})
-              "-M" "-m"     "nrepl.cmdline"
-              "--port"      (str port)
-              "--middleware" (pr-str (:middlewares command-config))
-              "--interactive"]})
+   :command (concat [e.c.jack-in/clojure-command]
+              optional-args
+              ["-Sdeps" (pr-str {:deps (:deps command-config)})
+               "-M" "-m" "nrepl.cmdline"
+               "--port" (str port)
+               "--middleware" (pr-str (:middlewares command-config))
+               "--interactive"])})
 
 (defmethod generate-command e.c.jack-in/leiningen
   [_ port _]
@@ -146,8 +146,5 @@
            port (e.u.nrepl/get-free-port)
            {:keys [language command]} (generate-command project-type port [])
            args (cons {:dir project-root-dir} command)]
-     (let [args (update (vec args)              ; turn list into vector for assoc
-                   0                       ; first element is the option-map
-                   assoc :inherit true)]   ; stream child I/O → parent I/O
-        (e.u.process/start (port->process-id port) args))
+     (e.u.process/start (port->process-id port) args)
      {:language language :port port})))
