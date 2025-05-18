@@ -25,10 +25,10 @@ function! s:start(port) abort
   endif
 
   let config = extend(
-        \ g:elin_config,
-        \ {'env':    {'cwd': l:cwd},
-        \  'plugin': {'edn-files': l:edn_files},
-        \  'server': {'host': s:host, 'port': str2nr(a:port)}},
+        \  g:elin_config,
+        \  {'env':   {'cwd': l:cwd},
+        \   'plugin': {'edn-files': l:edn_files},
+        \   'server': {'host': s:host, 'port': str2nr(a:port)}},
         \ )
 
   let json_config = json_encode(config)
