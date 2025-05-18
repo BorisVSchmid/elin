@@ -37,7 +37,7 @@ function! s:skip_in_string_or_comment() abort
 endfunction
 
 function! s:jump_if_path_exists(path) abort
-  if a:path !=# '' && expand('%:p') !=# a:path && filereadable(a:path)
+  if a:path !=# '' && elin#internal#path#file() !=# a:path && filereadable(a:path)
     execute printf(':keepjumps edit %s', a:path)
   endif
 endfunction
