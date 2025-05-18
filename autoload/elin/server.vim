@@ -30,7 +30,6 @@ function! s:start(port) abort
         \    'plugin': {'edn-files': l:edn_files},
         \    'server': {'host': s:host, 'port': str2nr(a:port)}},
         \ )
-
   let json_config = json_encode(config)
   let command = [g:elin#babashka, '-m', 'elin.core', json_config]
   let options = {
