@@ -11,6 +11,6 @@ endfunction
 function! s:complete_filename(v) abort
   let res = copy(a:v)
   let nr = get(res, 'bufnr', -1)
-  let res['filename'] = fnamemodify(bufname(nr), ':p')
+  let res['filename'] = elin#internal#path#from_bufnr(nr)
   return res
 endfunction
